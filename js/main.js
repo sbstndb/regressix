@@ -81,9 +81,10 @@ async function loadOverallPerformanceTrend() {
 }
 
 async function loadMajorChanges(allData) {
-    const sectionId = 'majorChanges'; // This ID is for the container of the list AND messages
+    const messageHolderId = 'majorChangesMessage'; // Dedicated message div
+    const listHolderId = 'impactedList'; // Div for the actual list
     console.log('Starting to identify major performance changes...');
-    showUIMessage(sectionId, 'Loading major performance changes...', 'loading');
+    showUIMessage(messageHolderId, 'Loading major performance changes...', 'loading');
 
     try {
         if (typeof findImpactedBenchmarks !== 'function') throw new Error('findImpactedBenchmarks function is not defined.');
@@ -91,26 +92,32 @@ async function loadMajorChanges(allData) {
 
         const versions = Object.keys(allData).sort();
         if (versions.length < 2) {
-            showUIMessage(sectionId, 'At least two data versions are required for major changes analysis.', 'info');
+            showUIMessage(messageHolderId, 'At least two data versions are required for major changes analysis.', 'info');
+            clearUIMessage(listHolderId); // Clear any previous list
             return;
         }
         const latestData = allData[versions[versions.length - 1]];
         const secondLatestData = allData[versions[versions.length - 2]];
         const threshold = 0.10;
         const impacted = findImpactedBenchmarks(latestData, secondLatestData, threshold);
-        // displayImpactedBenchmarksList will clear the loading message and show results or "no impacted" message.
-        displayImpactedBenchmarksList(sectionId, impacted);
-        console.log('Impacted benchmarks list displayed or "no impacted" message shown.');
+
+        // displayImpactedBenchmarksList is expected to draw into listHolderId.
+        // If it finds no impacted benchmarks, it should show a message in listHolderId.
+        displayImpactedBenchmarksList(listHolderId, impacted);
+        clearUIMessage(messageHolderId); // Clear loading message if displayImpactedBenchmarksList was successful
+        console.log('Impacted benchmarks list displayed or "no impacted" message shown in respective div.');
     } catch (error) {
         console.error('Error in major changes analysis:', error);
-        showUIMessage(sectionId, `Failed to identify major changes: ${error.message}`, 'error');
+        showUIMessage(messageHolderId, `Failed to identify major changes: ${error.message}`, 'error');
+        clearUIMessage(listHolderId); // Clear any previous list on error
     }
 }
 
 async function loadGlobalStatistics(allData) {
-    const sectionId = 'globalStatsDisplay'; // This ID is for the container of stats AND messages
+    const messageHolderId = 'globalStatsDisplayMessage'; // Dedicated message div
+    const statsHolderId = 'globalStatsDisplay'; // Div for the actual stats
     console.log('Starting to load global performance statistics...');
-    showUIMessage(sectionId, 'Loading global performance statistics...', 'loading');
+    showUIMessage(messageHolderId, 'Loading global performance statistics...', 'loading');
 
     try {
         if (typeof calculateGlobalPerformanceStats !== 'function') throw new Error('calculateGlobalPerformanceStats function is not defined.');
@@ -118,18 +125,24 @@ async function loadGlobalStatistics(allData) {
 
         const versions = Object.keys(allData).sort();
         if (versions.length < 2) {
-            showUIMessage(sectionId, 'At least two data versions are required for global statistics.', 'info');
+            showUIMessage(messageHolderId, 'At least two data versions are required for global statistics.', 'info');
+            clearUIMessage(statsHolderId); // Clear any previous stats
             return;
         }
         const currentV = allData[versions[versions.length - 1]];
         const previousV = allData[versions[versions.length - 2]];
         const stats = calculateGlobalPerformanceStats(currentV, previousV);
-        // displayGlobalStats will clear the loading message and show results or "no stats" message.
-        displayGlobalStats(stats, sectionId);
-        console.log('Global statistics displayed or "no stats" message shown.');
-    } catch (error) {
+
+        // displayGlobalStats is expected to draw into statsHolderId.
+        // If it finds no common benchmarks, it should show a message in statsHolderId.
+        displayGlobalStats(stats, statsHolderId);
+        clearUIMessage(messageHolderId); // Clear loading message if displayGlobalStats was successful
+        console.log('Global statistics displayed or "no stats" message shown in respective div.');
+    } catch (error)
         console.error('Error in global statistics:', error);
-        showUIMessage(sectionId, `Failed to load global statistics: ${error.message}`, 'error');
+        showUIMessage(messageHolderId, `Failed to load global statistics: ${error.message}`, 'error');
+        clearUIMessage(statsHolderId); // Clear any previous stats on error
+    }
     }
 }
 

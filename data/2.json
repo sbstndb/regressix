@@ -1,0 +1,60 @@
+{
+  "context": {
+    "date": "2023-01-16T10:00:00Z",
+    "executable": "./my_benchmark_v2",
+    "num_cpus": 8,
+    "mhz_per_cpu": 3000,
+    "cpu_scaling_enabled": false,
+    "library_build_type": "release"
+  },
+  "benchmarks": [
+    {
+      "name": "BM_StringCreation",
+      "run_name": "BM_StringCreation",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 100000,
+      "real_time": 120.0,
+      "cpu_time": 119.0,
+      "time_unit": "us"
+    },
+    {
+      "name": "BM_VectorSort",
+      "run_name": "BM_VectorSort",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 5000,
+      "real_time": 2800.0,
+      "cpu_time": 2790.0,
+      "time_unit": "us"
+    },
+    {
+      "name": "BM_MatrixMultiply",
+      "run_name": "BM_MatrixMultiply",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 100,
+      "real_time": 45000.0,
+      "cpu_time": 44000.0,
+      "time_unit": "us"
+    },
+    {
+      "name": "BM_NewFeature",
+      "run_name": "BM_NewFeature",
+      "run_type": "iteration",
+      "repetitions": 1,
+      "repetition_index": 0,
+      "threads": 1,
+      "iterations": 1000,
+      "real_time": 500.0,
+      "cpu_time": 490.0,
+      "time_unit": "us"
+    }
+  ]
+}

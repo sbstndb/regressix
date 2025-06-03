@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regressix - Performance Analysis</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Regressix: Performance Evolution</h1>
+    </header>
+
+    <div id="errorMessage" style="display: none;"></div>
+
+    <main>
+        <section id="overview">
+            <h2>Overall Performance Trend</h2>
+            <div id="overallPerformanceChartMessage"></div>
+            <div class="chart-container">
+                <canvas id="overallPerformanceChart"></canvas>
+            </div>
+        </section>
+
+        <section id="majorChangesSection"> <!-- Renamed to avoid conflict with main.js sectionId variable 'majorChanges' -->
+            <h2>Quick Identification of Major Changes</h2>
+            <div id="majorChangesMessage"></div> <!-- General messages for this section -->
+            <div id="impactedList">
+                <!-- Impacted benchmarks list will be populated here by js/ui_builder.js -->
+            </div>
+        </section>
+
+        <section id="changeStats">
+            <h2>Change Analysis (Global Statistics)</h2>
+            <div id="globalStatsDisplayMessage"></div> <!-- General messages for this section -->
+            <div id="globalStatsDisplay">
+                <!-- Global statistics will be populated here -->
+            </div>
+        </section>
+
+        <section id="detailedTestView">
+            <h2>Detailed Exploration per Test Case</h2>
+            <div id="detailedTestViewMessage"></div> <!-- General messages for this section -->
+
+            <div>
+                <label for="benchmarkSelect">Select Benchmark:</label>
+                <select id="benchmarkSelect">
+                    <option value="">-- Loading Benchmarks --</option>
+                </select>
+            </div>
+
+            <div id="detailedBenchmarkChartMessage"></div>
+            <div class="chart-container">
+                <canvas id="detailedBenchmarkChart"></canvas>
+            </div>
+
+            <div id="benchmarkDetailsMessage"></div>
+            <div id="benchmarkDetails">
+                <!-- Benchmark specific details will be populated here -->
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>Regressix - Benchmark Visualization</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/data_processor.js"></script>
+    <script src="js/ui_builder.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
